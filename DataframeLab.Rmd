@@ -29,16 +29,16 @@ Because you're in an RProject, you don't need to set your working directory in R
 
 - Use the glimpse function to look at the loaded data
 
-```{r}
+```{r }
 
-
+glimpse(grants)
 ```
 
 
 - Create a variable `org` that contains the `organization` column of the dataset
 
 ```{r}
-
+org <- grants[["organization"]]
 
 ```
 
@@ -47,6 +47,7 @@ Because you're in an RProject, you don't need to set your working directory in R
 
 ```{r}
 
+is.vector(org)
 
 ```
 
@@ -57,12 +58,14 @@ Now you can ask some interesting questions about the dataset:
 
 ```{r}
 
+mean(grants[["total_amount"]])
 ```
 
 
 - What was the dollar amount of the largest grant?
 
 ```{r}
+grants$total_amount[[which.max(grants[["total_amount"]])]]
 
 ```
 
@@ -70,6 +73,7 @@ Now you can ask some interesting questions about the dataset:
 - What was the dollar amount of the smallest grant?
 
 ```{r}
+grants$total_amount[[which.min(grants[["total_amount"]])]]
 
 ```
 
@@ -77,7 +81,7 @@ Now you can ask some interesting questions about the dataset:
 - Which organization received the largest grant?
 
 ```{r}
-
+grants$organization[[which.max(grants[["total_amount"]])]]
 
 ```
 
@@ -85,19 +89,20 @@ Now you can ask some interesting questions about the dataset:
 - Which organization received the smallest grant?
 
 ```{r}
-
+grants$organization[[which.min(grants[["total_amount"]])]]
 ```
 
 - How many grants were awarded in 2010?
 
 ```{r}
+sum(grants$start_year == 2010)
 
 ```
 
 - How much was awarded in 2010? 
 
 ```{r}
-
+sum(grants$total_amount[grants$start_year == 2010])
 ```
 
 
@@ -123,13 +128,15 @@ Luckily, you can pass the USPersonalExpenditure variable as an argument to the `
 Do this, storing the result in a new variable
 
 ```{r}
+USPersonalExpidenture <- data.frame(USPersonalExpenditure)
 
+is.data.frame(USPersonalExpidenture)
 ```
 
 
 What are the current column names of your dataframe?
 ```{r}
-
+# 1940, 1945, 1950, 1955, 1960
 ```
 
 
@@ -137,6 +144,11 @@ Consider: why are they so strange? (Think about whether you could use a number l
 
 What are the current row names of your dataframe?
 ```{r}
+# Food and Tobacco	
+# Household Operation	
+# Medical and Health	
+# Personal Care	
+# Private Education
 
 ```
 
@@ -144,12 +156,18 @@ What are the current row names of your dataframe?
 Add a column "Category" to your data frame that contains the rownames
 
 ```{r}
+USPersonalExpidenture <- rownames_to_column(USPersonalExpidenture,var = "Category")
 
 ```
 
 Consider how this data isn't tidy. Use the `pivot_longer()` function from last class to make the data tidy. 
 
 ```{r}
+
+pivot_longer(data = USPersonalExpidenture,
+             cols = c('X1940', 'X1945', 'X1950', 'X1955', 'X1960'),
+             names_to = 'years',
+             values_to = "spending")
 
 ```
 
