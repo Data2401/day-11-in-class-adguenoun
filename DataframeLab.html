@@ -490,27 +490,19 @@ rownames</p>
 <p>Consider how this data isn’t tidy. Use the
 <code>pivot_longer()</code> function from last class to make the data
 tidy.</p>
-<pre class="r"><code>pivot_longer(data = USPersonalExpidenture,
+<pre class="r"><code>USPersonalExpidenture &lt;- pivot_longer(data = USPersonalExpidenture,
              cols = c(&#39;X1940&#39;, &#39;X1945&#39;, &#39;X1950&#39;, &#39;X1955&#39;, &#39;X1960&#39;),
              names_to = &#39;years&#39;,
              values_to = &quot;spending&quot;)</code></pre>
-<pre><code>## # A tibble: 25 × 3
-##    Category            years spending
-##    &lt;chr&gt;               &lt;chr&gt;    &lt;dbl&gt;
-##  1 Food and Tobacco    X1940     22.2
-##  2 Food and Tobacco    X1945     44.5
-##  3 Food and Tobacco    X1950     59.6
-##  4 Food and Tobacco    X1955     73.2
-##  5 Food and Tobacco    X1960     86.8
-##  6 Household Operation X1940     10.5
-##  7 Household Operation X1945     15.5
-##  8 Household Operation X1950     29  
-##  9 Household Operation X1955     36.5
-## 10 Household Operation X1960     46.2
-## # ℹ 15 more rows</code></pre>
 <p>How much money was spent on personal care in 1940?</p>
+<pre class="r"><code>USPersonalExpidenture$spending[(USPersonalExpidenture$Category == &#39;Personal Care&#39;) &amp; (USPersonalExpidenture$years == &#39;X1940&#39;)]</code></pre>
+<pre><code>## [1] 1.04</code></pre>
 <p>How much money was spent on Food and Tobacco in 1960?</p>
+<pre class="r"><code>USPersonalExpidenture$spending[USPersonalExpidenture$Category == &#39;Food and Tobacco&#39; &amp; USPersonalExpidenture$years == &#39;X1960&#39;]</code></pre>
+<pre><code>## [1] 86.8</code></pre>
 <p>What was the highest expenditure category in 1960?</p>
+<pre class="r"><code>USPersonalExpidenture$Category[which.max(USPersonalExpidenture$spending[USPersonalExpidenture$years == &#39;X1960&#39;])]</code></pre>
+<pre><code>## [1] &quot;Food and Tobacco&quot;</code></pre>
 <p>Define a function <code>lowest_category</code> that takes in a year
 as a parameter, and returns the lowest spending category of that
 year</p>

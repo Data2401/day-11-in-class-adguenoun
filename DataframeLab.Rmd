@@ -164,7 +164,7 @@ Consider how this data isn't tidy. Use the `pivot_longer()` function from last c
 
 ```{r}
 
-pivot_longer(data = USPersonalExpidenture,
+USPersonalExpidenture <- pivot_longer(data = USPersonalExpidenture,
              cols = c('X1940', 'X1945', 'X1950', 'X1955', 'X1960'),
              names_to = 'years',
              values_to = "spending")
@@ -175,12 +175,14 @@ pivot_longer(data = USPersonalExpidenture,
 How much money was spent on personal care in 1940?
 ```{r}
 
-```
+USPersonalExpidenture$spending[(USPersonalExpidenture$Category == 'Personal Care') & (USPersonalExpidenture$years == 'X1940')]
 
+
+```
 
 How much money was spent on Food and Tobacco in 1960?
 ```{r}
-
+USPersonalExpidenture$spending[USPersonalExpidenture$Category == 'Food and Tobacco' & USPersonalExpidenture$years == 'X1960']
 
 ```
 
@@ -188,6 +190,8 @@ How much money was spent on Food and Tobacco in 1960?
 What was the highest expenditure category in 1960?
 ```{r}
 
+
+USPersonalExpidenture$Category[which.max(USPersonalExpidenture$spending[USPersonalExpidenture$years == 'X1960'])]
 
 ```
 
